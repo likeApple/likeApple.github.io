@@ -176,11 +176,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>一、介绍</strong><br>Lombok项目是一种自动接通编辑器和构建工具的一个java库，不应再一次写额外的getter或者equals方法。</p>
-<p><strong>二、相关注解说明</strong><br><img src="/2018/11/06/关于lombok/介绍.png" alt="介绍"></p>
-<p><strong>三、注解详情</strong></p>
-<p><strong>@log</strong><br>注解在类上，有如下可选择可用：<br><img src="/2018/11/06/关于lombok/log.png" alt="log"><br>默认情况下，记录器的主题（或名称）将是使用注释进行@log注释的类名称。这可以通过制定topic参数来定制。例如：@XSLf4j(topic=”reporting”).<br>该类型注解可以满足不同的日志系统的日志使用，lombok提供了一些定义配置项可以参看官方说明文档。<br><strong>@Getter和@Setter</strong><br>该注解使用在类或者属性上，该注解可以使用在类上也可以使用在属性上。生成的getter遵循布尔属性的约定。例如：boolean类型的sex.getter方法为isSex而不是getSex<br>在使用该注解时，会默认生成一个无参构造，和对应的getter setter 方法<br><img src="/2018/11/06/关于lombok/1.png" alt="log"><br>该注解也可以用在单个属性上，会默认生成一个无参构造：<br><img src="/2018/11/06/关于lombok/2.png" alt="log"><br><strong>@Data</strong><br>该注解使用在类上，该注解会提供getter、setter、equals、canEqual、hashCode、toString方法<br><img src="/2018/11/06/关于lombok/3.png" alt="log"><br><strong>@NonNull</strong><br>该注解使用在属性上，该注解用于属性的非空检查，当放在setter方法的字段上，将生成一个空排查，如果为空，则抛出NullPointerException.<br>该注解会默认生成一个无参构造。<br><img src="/2018/11/06/关于lombok/4.png" alt="log"><br><strong>@toString</strong><br>该注解使用在类上，该注解默认生成任何非讲台字段以名称-值的形式输出。<br>1、如果需要可以通过注释参数includeFieldNames来控制输出中是否包含属性的名称。<br>2、可以通过exclude 参数中包含字段名称，可以从生成的方法中排出特定字段。<br>3、可以通过callSuper参数控制父类的输出。<br><strong>@EqualsAndHashcode</strong><br>该注解使用在类上，该注解在类级别注释会同时生成equals和hashcode。<br>注意继承关系的时候该注解的使用。<br><img src="/2018/11/06/关于lombok/5.png" alt="log"><br><strong>@AllArgsConstructor</strong><br>该注解使用在类上，该注解提供一个二泉参数的构造方法，默认不提供无参构造。<br><img src="/2018/11/06/关于lombok/6.png" alt="log"><br><strong>@NoArgsConstructor</strong><br>该注解使用在类上，该注解提供一个无参构造<br><img src="/2018/11/06/关于lombok/7.png" alt="log"><br><strong>@RequiredArgsConstructor</strong><br>该注解使用在类上，使用类中所有带有@NonNull注解的或者带有final修饰的成员变量生成对应的构造方法。<br><img src="/2018/11/06/关于lombok/8.png" alt="log"><br><strong>@Value</strong><br>这个注解用在类上，会生成包含所有参数的构造方法，get 方法，此外还提供了equals、hashCode、toString 方法.<br>注意：没有setter<br><img src="/2018/11/06/关于lombok/9.png" alt="log"><br><strong>@Cleanup</strong><br>该注解使用在属性前，该注解是用来保证分配的资源被释放。在本地变量上使用该注解，任何后续代码都将封装在try/finally中，确保当前作用于当前的资源被释放。默认@Cleanup情路的方法为close,可以使用value指定不同的方法名称。<br><img src="/2018/11/06/关于lombok/10.png" alt="log"><br><strong>SynChronized</strong><br>该注解使用在类或者实例方法上，Synchronized在一个方法上，使用关键字可能会导致结果和想要的结果不同，因为多线程情况下会出现异常情况。Synchronized 关键字将在this 示例的情况系锁定当前对象，或者class讲台方法的对象上多锁定，这可能会导致死锁现象。一半情况下建议锁定一个专门用于此目的的独立锁，而不是允许公共对象进行锁定。该注解也是为了达到该目的。<br><img src="/2018/11/06/关于lombok/11.png" alt="log"><br><strong>SneakThrows</strong><br>该注解使用在方法上，这个注解用在方法上，可以将方法中的代码用try-catch语句包裹起来，捕获异常在catch中使用Lombok.sneakyThrow(e)把异常抛出，可以使用@SneakyThrows(Exception.class)的形式指定抛出哪种异常，该注解需要谨慎使用</p>
-
+        <p><strong>一、介绍</strong><br>Lombok项目是一种自动接通编辑器和构建工具的一个java库，不应再一次写额外的getter或者equals方法。<br></p>
+        
+          <a class="article-more-a" href="2018/11/06/关于lombok/#more">more >></a>
+        
       
 
       
@@ -945,11 +944,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">生活</a>
+                <a href="javascript:void(0)" class="js-tag color1">-- 转载</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">-- 转载</a>
+                <a href="javascript:void(0)" class="js-tag color3">生活</a>
               </li>
              
               <li class="article-tag-list-item">
