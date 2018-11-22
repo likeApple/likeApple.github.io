@@ -257,15 +257,10 @@
 <ol start="2">
 <li>RPC(Remote Procedure Call Protocol) -远程过程调用协议，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议</li>
 <li>客户端要调用服务端必须遵循TCP 协议，而Webservice使用的事更高一级的HTTP协议。</li>
-<li>客户端访问服务器的目的是为了获取数据，拿数据必须是与平台、语言无关的。webservice 采用的事xml</li>
-</ol>
-<p><strong>二</strong> CXF基础<br>1.服务端开发<br>CXF遵循wsdl协议<br>首先定义一个借口：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Webservice</span><br><span class="line">public interface StudentScoreInterface&#123;</span><br><span class="line">        @WebMethod</span><br><span class="line">        public int getScore(String studentName)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后实现该接口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//必须制定对外发布服务的借口</span><br><span class="line">@WebService(endpointInterface=&quot;&quot;)</span><br><span class="line">public class StudentService implements StudentScoreInterface&#123;</span><br><span class="line">    private static Map&lt;String,Integer&gt; map=new HashMap&lt;&gt;();</span><br><span class="line">    static&#123;</span><br><span class="line">        map.put(&quot;笑脸&quot;，100)；</span><br><span class="line">        map.put(&quot;小胡&quot;，90);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public int getScore(String studentName)&#123;</span><br><span class="line">        return map.get(studentName)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>发布服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class PublishStudentService&#123;</span><br><span class="line">    public static viod main(String[] args)&#123;</span><br><span class="line">    //CXF发布方式</span><br><span class="line">    JaxWsServerFactoryBean factoryBean=new JaxWsServerFactoryBean();</span><br><span class="line">    String address=&quot;http://127.0.0.1:8080/score&quot;;</span><br><span class="line">    factoryBean.setAddress(address);</span><br><span class="line">    factoryBean.setServiceBean(implementor);</span><br><span class="line">    factoryBean.setServiceClass(StudentScoreInterface.class);</span><br><span class="line">    factoryBean.create();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<li>客户端访问服务器的目的是为了获取数据，拿数据必须是与平台、语言无关的。webservice 采用的事xml</li></ol>
+        
+          <a class="article-more-a" href="2018/11/12/webservice和CXF/#more">more >></a>
+        
       
 
       
