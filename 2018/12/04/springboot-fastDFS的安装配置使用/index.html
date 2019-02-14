@@ -19,7 +19,9 @@
 <meta property="og:image" content="http://yoursite.com/2018/12/04/springboot-fastDFS的安装配置使用/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/04/springboot-fastDFS的安装配置使用/2.png">
 <meta property="og:image" content="http://yoursite.com/2018/12/04/springboot-fastDFS的安装配置使用/3.png">
-<meta property="og:updated_time" content="2018-12-22T09:19:49.517Z">
+<meta property="og:image" content="http://yoursite.com/2018/12/04/springboot-fastDFS的安装配置使用/">
+<meta property="og:image" content="http://yoursite.com/2018/12/04/springboot-fastDFS的安装配置使用/">
+<meta property="og:updated_time" content="2018-12-23T01:48:24.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot fastDFS的安装配置使用">
 <meta name="twitter:description" content="一、fastDFS介绍fastDFS是一个i=开源的分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。fastDFS服务端有两个角色：跟踪器（tracker）和存储节点（storage）。">
@@ -223,7 +225,8 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf V5.05.tar.gz</span><br><span class="line"># cd fastdfs-5.05</span><br></pre></td></tr></table></figure>
 <ul>
-<li>编译、安装<h1 id="make-sh-1"><a href="#make-sh-1" class="headerlink" title="./make.sh"></a>./make.sh</h1><h1 id="make-sh-install-1"><a href="#make-sh-install-1" class="headerlink" title="./make.sh install"></a>./make.sh install</h1></li>
+<li><p>编译、安装</p>
+<h1 id="make-sh-1"><a href="#make-sh-1" class="headerlink" title="./make.sh"></a>./make.sh</h1><h1 id="make-sh-install-1"><a href="#make-sh-install-1" class="headerlink" title="./make.sh install"></a>./make.sh install</h1></li>
 <li>建立软连接</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ln -s /usr/bin/fdfs_trackerd   /usr/local/bin</span><br><span class="line"># ln -s /usr/bin/fdfs_storaged   /usr/local/bin</span><br><span class="line"># ln -s /usr/bin/stop.sh         /usr/local/bin</span><br><span class="line"># ln -s /usr/bin/restart.sh      /usr/local/bin</span><br></pre></td></tr></table></figure>
@@ -272,6 +275,43 @@
 <ul>
 <li>编辑storage.conf,只标出需要修改的部分</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Storage 数据和日志目录地址(根目录必须存在，子目录会自动生成)</span><br><span class="line">base_path=/ljzsg/fastdfs/storage</span><br><span class="line"># 如果不配置 store_path0，那它就和 base_path 对应的路径一样。</span><br><span class="line">store_path0=/ljzsg/fastdfs/file</span><br><span class="line"># 有多个 tracker server 时，每个 tracker server 写一行</span><br><span class="line">tracker_server=chang.com:22122</span><br><span class="line"># 访问端口</span><br><span class="line">http.server_port=80</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建storage基础数据目录，对应base_path目录</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># mkdir -p /ljzsg/fastdfs/storage</span><br><span class="line"># 这是配置的store_path0路径</span><br><span class="line"># mkdir -p /ljzsg/fastdfs/file</span><br></pre></td></tr></table></figure>
+<ul>
+<li>防火墙中打开存储器端口（默认为23000）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/sysconfig/iptables</span><br><span class="line">添加如下端口行：</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-A INPUT -m state --state NEW -m tcp -p tcp --dport 23000 -j ACCEPT</span><br><span class="line">重启防火墙：</span><br><span class="line"># service iptables restart</span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动storage<br>启动storage 前确保tracker是启动的，初次启动成功，会在 /ljzsg/fastdfs/storage 目录下创建 data、 logs 两个目录。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">可以用这种方式启动</span><br><span class="line"># /etc/init.d/fdfs_storaged start</span><br><span class="line">也可以用这种方式，后面都用这种</span><br><span class="line"># service fdfs_storaged start</span><br></pre></td></tr></table></figure>
+<p>查看storage是否成功启动，23000端口正在被监听，就算storage启动陈宫</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># netstat -unltp|grep fdfs</span><br></pre></td></tr></table></figure>
+<p>关闭storage命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># service fdfs_storaged stop</span><br></pre></td></tr></table></figure>
+<p>查看storage和tracker是否在通信</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/fdfs_monitor /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/12/04/springboot-fastDFS的安装配置使用/" alt=""></p>
+<ul>
+<li>设置storage开机启动</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># chkconfig fdfs_storaged on</span><br><span class="line">或者：</span><br><span class="line"># vim /etc/rc.d/rc.local</span><br><span class="line">加入配置：</span><br><span class="line">/etc/init.d/fdfs_storaged start</span><br></pre></td></tr></table></figure>
+<ul>
+<li>storage 目录<br>同tracker,storage 启动成功后，在base_path下创建data，logs目录，记录着storageServer 的信息。在store_path0目录下，创建N✖️N个子目录<br>5.<strong>文件上传测试</strong></li>
+<li>修改tacker服务器中的客户端配置文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># cd /etc/fdfs</span><br><span class="line"># cp client.conf.sample client.conf</span><br><span class="line"># vim client.conf</span><br></pre></td></tr></table></figure>
+<p>修改如下配置即可，其他默认</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Client 的数据和日志目录</span><br><span class="line">base_path=/ljzsg/fastdfs/client</span><br><span class="line"># Tracker端口</span><br><span class="line">tracker_server=file.ljzsg.com:22122</span><br></pre></td></tr></table></figure>
+<ul>
+<li>上传测试<br>在linux 内部执行如下命令上传name.jpeg 图片</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># /usr/bin/fdfs_upload_file /etc/fdfs/client.conf name.jpeg</span><br></pre></td></tr></table></figure>
+<p>上床成功后返回文件ID号：group1/M00/00/00/wKgz6lnduTeAMdrcAAEoRmXZPp870.jpeg<br>返回的文件ID由group、存储目录、两级子目录、fileid、文件后缀名（由客户端制定，主要用于区分文件类型）拼接而成<br><img src="/2018/12/04/springboot-fastDFS的安装配置使用/" alt=""></p>
 
       
 
@@ -376,6 +416,15 @@
   
 <nav id="article-nav">
   
+    <a href="../../../../2019/02/14/小孟的真实身份/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          小孟的真实身份
+        
+      </div>
+    </a>
+  
   
     <a href="../../../11/23/springboot全局异常处理和拦截器统一异常返回信息/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">springboot全局异常处理和拦截器统一异常返回信息</div>
@@ -439,7 +488,7 @@ gitment.render('gitment-ctn')
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 chang
+    		&copy; 2019 chang
     	</div>
       	<div class="footer-right">
 <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
