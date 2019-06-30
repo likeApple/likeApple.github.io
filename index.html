@@ -156,6 +156,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-centOS7挂载镜像" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="2019/06/30/centOS7挂载镜像/">centOS7挂载镜像</a>
+    </h1>
+  
+
+        
+        <a href="2019/06/30/centOS7挂载镜像/" class="archive-article-date">
+  	<time datetime="2019-06-30T11:46:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>上传iso文件到/opt</li>
+<li><p>创建挂载目录</p>
+<p><code># mkdir/media/CentOS7</code></p>
+</li>
+<li>挂载iso文件<br><code># mount -t iso9660 -o loop /opt/CentOS-7-x86_64-DVD-1511_7.2.iso /media/CentOS7/</code></li>
+<li>配置源<br><code>#  vi /etc/yum.repos.d/CentOS7-Localsource.repo</code><br>输入一下内容<br><code>[CentOS7-Localsource]
+name=CentOS7
+baseurl=file:///media/CentOS7
+enabled=1
+gpgcheck=0</code><br>如果是iosred-hat 6.5<br><code>#  vi  /etc/yum.repos.d/rhel-source.repo</code><br><code>[rhel-source-local]
+name=Red Hat Enterprise Linux
+baseurl=file:///iso
+enabled=1
+gpgcheck=0</code></li>
+<li>将此文件/etc/yum.repos.d/CentOS-Base.repo备份掉，</li>
+<li>生成本地yum缓存执行<br><code># yum  clean all</code><br><code># yum makecache</code></li>
+<li>测试是否生效<br><code># yum install telnet</code></li>
+<li>卸载挂载的镜像文件<br><code># umount  /media/CentOS7/</code></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="2019/06/30/centOS7挂载镜像/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-fastdfs集群部署" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -187,176 +280,9 @@
 <li>跟踪服务器tracker安装nginx</li>
 </ul>
 </blockquote>
-<p> <em>FastDfs同一卷下可以有多台服务器，多台服务器内容相同，冗余备份；可以有多卷，多卷起到扩容作用；</em></p>
-<p> <strong>服务器</strong></p>
-<ul>
-<li>tracker  172.16.1.201</li>
-<li>Group1  storage1  172.16.1.202</li>
-<li>Gouop1  storage2  172.16.1.203</li>
-<li>Group2  storage3  172.16.1.205</li>
-</ul>
-<h2 id="一-FastDFS安装"><a href="#一-FastDFS安装" class="headerlink" title="一.FastDFS安装"></a>一.FastDFS安装</h2><ol>
-<li>下载安装libfastcommon</li>
-</ol>
-<p>(1)下载libfastcommon<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wget https://github.com/happyfish100/libfastcommon/archive/V1.0.7.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>(2)解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf V1.0.7.tar.gz</span><br><span class="line"># cd libfastcommon-1.0.7</span><br></pre></td></tr></table></figure></p>
-<p>(3)编译、安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ./make.sh</span><br><span class="line"># ./make.sh install</span><br></pre></td></tr></table></figure></p>
-<p>(4)创建软连接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ln -s /usr/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so</span><br><span class="line"># ln -s /usr/lib64/libfastcommon.so /usr/lib/libfastcommon.so</span><br><span class="line"># ln -s /usr/lib64/libfdfsclient.so /usr/local/lib/libfdfsclient.so</span><br><span class="line"># ln -s /usr/lib64/libfdfsclient.so /usr/lib/libfdfsclient.so</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>下载安装FastDFS<br>(1)下载FastDFS<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wget https://github.com/happyfish100/fastdfs/archive/V5.05.tar.gz</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>(2)解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf V5.05.tar.gz</span><br><span class="line"># cd fastdfs-5.05</span><br></pre></td></tr></table></figure></p>
-<p>(3)编译、安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ./make.sh</span><br><span class="line"># ./make.sh install</span><br></pre></td></tr></table></figure></p>
-<p>(4)创建软连接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ln -s /usr/bin/fdfs_trackerd   /usr/local/bin</span><br><span class="line"># ln -s /usr/bin/fdfs_storaged   /usr/local/bin</span><br><span class="line"># ln -s /usr/bin/stop.sh         /usr/local/bin</span><br><span class="line"># ln -s /usr/bin/restart.sh      /usr/local/bin</span><br></pre></td></tr></table></figure></p>
-<h2 id="二-配置FastDFS跟踪服务器tracker-对所有的tracker进行如下操作"><a href="#二-配置FastDFS跟踪服务器tracker-对所有的tracker进行如下操作" class="headerlink" title="二.配置FastDFS跟踪服务器tracker(对所有的tracker进行如下操作)"></a>二.配置FastDFS跟踪服务器tracker(对所有的tracker进行如下操作)</h2><ol>
-<li><p>进入 /etc/fdfs，复制 FastDFS 跟踪器样例配置文件 tracker.conf.sample，并重命名为 tracker.conf。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># cd /etc/fdfs</span><br><span class="line"># cp tracker.conf.sample tracker.conf</span><br><span class="line"># vim tracker.conf</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑tracker.conf ，标红的需要修改下，其它的默认即可。</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 配置文件是否不生效，false 为生效</span><br><span class="line">disabled=false</span><br><span class="line"></span><br><span class="line"># 提供服务的端口</span><br><span class="line">port=22122</span><br><span class="line"></span><br><span class="line"># Tracker 数据和日志目录地址(根目录必须存在,子目录会自动创建)</span><br><span class="line">base_path=/chang/fastdfs/tracker</span><br><span class="line"></span><br><span class="line"># HTTP 服务端口</span><br><span class="line">http.server_port=80</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li><p>创建tracker基础数据目录，即base_path对应的目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkdir -p /chang/fastdfs/tracker</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>防火墙中打开跟踪端口（默认的22122）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># firewall-cmd --zone=public --add-port=22122/tcp --permanent</span><br><span class="line"># firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动Tracker</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># service fdfs_trackerd start</span><br><span class="line"></span><br><span class="line">查看 FastDFS Tracker 是否已成功启动 ，22122端口正在被监听，则算是Tracker服务安装成功。</span><br><span class="line"># netstat -unltp|grep fdfs</span><br><span class="line"></span><br><span class="line">关闭tracker 命令</span><br><span class="line"># service fdfs_trackerd stop</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置Tracker开机启动</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chkconfig fdfs_trackerd on</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="三-配置FastDFS存储服务器storage-对所有的storage-执行如下操作"><a href="#三-配置FastDFS存储服务器storage-对所有的storage-执行如下操作" class="headerlink" title="三.配置FastDFS存储服务器storage(对所有的storage 执行如下操作)"></a>三.配置FastDFS存储服务器storage(对所有的storage 执行如下操作)</h2><ol>
-<li><p>进入 /etc/fdfs 目录，复制 FastDFS 存储器样例配置文件 storage.conf.sample，并重命名为 storage.conf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># cd /etc/fdfs</span><br><span class="line"># cp storage.conf.sample storage.conf</span><br><span class="line"># vim storage.conf</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑storage.conf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 配置文件是否不生效，false 为生效</span><br><span class="line">disabled=false </span><br><span class="line"></span><br><span class="line"># 指定此 storage server 所在 组(卷)</span><br><span class="line">group_name=group1</span><br><span class="line"></span><br><span class="line"># storage server 服务端口</span><br><span class="line">port=23000</span><br><span class="line"></span><br><span class="line"># 心跳间隔时间，单位为秒 (这里是指主动向 tracker server 发送心跳)</span><br><span class="line">heart_beat_interval=30</span><br><span class="line"></span><br><span class="line"># Storage 数据和日志目录地址(根目录必须存在，子目录会自动生成)</span><br><span class="line">base_path=/chang/fastdfs/storage</span><br><span class="line"></span><br><span class="line"># 存放文件时 storage server 支持多个路径。这里配置存放文件的基路径数目，通常只配一个目录。</span><br><span class="line">store_path_count=1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 逐一配置 store_path_count 个路径，索引号基于 0。</span><br><span class="line"># 如果不配置 store_path0，那它就和 base_path 对应的路径一样。</span><br><span class="line">store_path0=/chang/fastdfs/file</span><br><span class="line"></span><br><span class="line"># FastDFS 存储文件时，采用了两级目录。这里配置存放文件的目录个数。 </span><br><span class="line"># 如果本参数只为 N（如： 256），那么 storage server 在初次运行时，会在 store_path 下自动创建 N * N 个存放文件的子目录。</span><br><span class="line">subdir_count_per_path=256</span><br><span class="line"></span><br><span class="line"># tracker_server 的列表 ，会主动连接 tracker_server</span><br><span class="line"># 有多个 tracker server 时，每个 tracker server 写一行</span><br><span class="line">tracker_server=172.16.1.201:22122</span><br><span class="line"></span><br><span class="line"># 允许系统同步的时间段 (默认是全天) 。一般用于避免高峰同步产生一些问题而设定。</span><br><span class="line">sync_start_time=00:00</span><br><span class="line">sync_end_time=23:59</span><br><span class="line"># 访问端口</span><br><span class="line">http.server_port=80</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建Storage基础数据目录，对应base_path目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># mkdir -p /chang/fastdfs/storage</span><br><span class="line"></span><br><span class="line"># 这是配置的store_path0路径</span><br><span class="line"># mkdir -p /chang/fastdfs/file</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>防火墙中打开存储器端口（默认的 23000） </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># firewall-cmd --zone=public --add-port=23000/tcp --permanent</span><br><span class="line"># firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动 Storage</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># service fdfs_storaged start</span><br><span class="line">查看 Storage 是否成功启动，23000 端口正在被监听，就算 Storage 启动成功。</span><br><span class="line"># netstat -unltp|grep fdfs</span><br><span class="line">关闭Storage命令：</span><br><span class="line"># service fdfs_storaged stop</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li>设置 Storage 开机启动<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># chkconfig fdfs_storaged on</span><br><span class="line"></span><br><span class="line">所有Storage节点都启动之后，可以在任一 Storage 节点上使用如下命令查看集群信息：</span><br><span class="line"># /usr/bin/fdfs_monitor /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="四-文件上传测试-直接在tracker服务器上传测试"><a href="#四-文件上传测试-直接在tracker服务器上传测试" class="headerlink" title="四.文件上传测试 (直接在tracker服务器上传测试)"></a>四.文件上传测试 (直接在tracker服务器上传测试)</h2><ol>
-<li><p>修改 Tracker 服务器中的客户端配置文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># cd /etc/fdfs</span><br><span class="line"># cp client.conf.sample client.conf</span><br><span class="line"># vim client.conf</span><br><span class="line"></span><br><span class="line">修改如下配置即可，其它默认。</span><br><span class="line"># Client 的数据和日志目录</span><br><span class="line">base_path=/chang/fastdfs/client</span><br><span class="line"># Tracker端口</span><br><span class="line">tracker_server=172.16.1.201:22122</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上传测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># /usr/bin/fdfs_upload_file /etc/fdfs/client.conf /usr/1.png</span><br></pre></td></tr></table></figure>
-<p>上传成功后返回文件ID号：group1/M00/00/00/wKgz6lnduTeAMdrcAAEoRmXZPp870.png</p>
-<h2 id="五-安装nginx"><a href="#五-安装nginx" class="headerlink" title="五.安装nginx"></a>五.安装nginx</h2></li>
-<li>安装nginx所需环境</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># yum install gcc-c++</span><br><span class="line"># yum install -y pcre pcre-devel</span><br><span class="line"># yum install -y zlib zlib-devel</span><br><span class="line"># yum install -y openssl openssl-devel</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>安装nginx</li>
-</ol>
-<p>(1)下载nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wget -c https://nginx.org/download/nginx-1.12.1.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p>(2)解压<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf nginx-1.12.1.tar.gz</span><br><span class="line"># cd nginx-1.12.1</span><br></pre></td></tr></table></figure></p>
-<p>(3)使用默认配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ./configure</span><br></pre></td></tr></table></figure></p>
-<p>(4)编译、安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># make</span><br><span class="line"># make install</span><br></pre></td></tr></table></figure></p>
-<p>(5)设置开机启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/rc.local</span><br><span class="line"></span><br><span class="line">添加一行：</span><br><span class="line">/usr/local/nginx/sbin/nginx</span><br><span class="line"></span><br><span class="line"># 设置执行权限</span><br><span class="line"># chmod 755 rc.local</span><br></pre></td></tr></table></figure></p>
-<p>(6)查看nginx的版本及模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># /usr/local/nginx/sbin/nginx -V</span><br></pre></td></tr></table></figure></p>
-<p>(7)防火墙中打开Nginx端口（默认的 80）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># firewall-cmd --zone=public --add-port=80/tcp --permanent</span><br><span class="line"># firewall-cmd --reload</span><br></pre></td></tr></table></figure></p>
-<h2 id="六-存储服务器storage配置nginx"><a href="#六-存储服务器storage配置nginx" class="headerlink" title="六.存储服务器storage配置nginx"></a>六.存储服务器storage配置nginx</h2><ol>
-<li><p>安装文件服务器nginx模块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 先停掉nginx服务</span><br><span class="line"># /usr/local/nginx/sbin/nginx -s stop</span><br><span class="line"></span><br><span class="line">进入解压包目录</span><br><span class="line"># cd /softpackages/nginx-1.12.1/</span><br><span class="line"></span><br><span class="line"># 添加模块</span><br><span class="line"># ./configure --add-module=../fastdfs-nginx-module-master/src</span><br><span class="line"></span><br><span class="line">重新编译、安装</span><br><span class="line"># make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>复制 fastdfs-nginx-module 源码中的配置文件到/etc/fdfs 目录， 并修改</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># cd /softpackages/fastdfs-nginx-module-master/src</span><br><span class="line"></span><br><span class="line"># cp mod_fastdfs.conf /etc/fdfs</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改复制的配置文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># 连接超时时间</span><br><span class="line">connect_timeout=10</span><br><span class="line"></span><br><span class="line"># Tracker Server</span><br><span class="line">tracker_server=172.16.1.201:22122</span><br><span class="line"></span><br><span class="line"># StorageServer 默认端口</span><br><span class="line">storage_server_port=23000</span><br><span class="line"></span><br><span class="line"># 如果文件ID的uri中包含/group**，则要设置为true</span><br><span class="line">url_have_group_name = true</span><br><span class="line"></span><br><span class="line"># Storage 配置的store_path0路径，必须和storage.conf中的一致</span><br><span class="line">store_path0=/chang/fastdfs/file</span><br><span class="line"></span><br><span class="line">group_count = 2</span><br><span class="line">[group1]</span><br><span class="line">group_name=group1</span><br><span class="line">storage_server_port=23000</span><br><span class="line">store_path_count=1</span><br><span class="line">store_path0=/chang/fastdfs/storage</span><br><span class="line">    </span><br><span class="line">[group2]</span><br><span class="line">group_name=group2</span><br><span class="line">storage_server_port=23000</span><br><span class="line">store_path_count=1</span><br><span class="line">store_path0=/chang/fastdfs/storage</span><br><span class="line"></span><br><span class="line">特别注意：</span><br><span class="line">第二组内的Storage服务器（这里指Fastdfs_storage_s2）的mod_fastdfs.conf配置与第一组配置只有group_name不同，即：</span><br><span class="line">group_name=group2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>复制 FastDFS 的部分配置文件到/etc/fdfs 目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># cd /softpackages/fastdfs-5.05/conf/</span><br><span class="line"></span><br><span class="line"># cp anti-steal.jpg http.conf mime.types /etc/fdfs/</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"> 5. 配置nginx，修改nginx.conf</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="vim-usr-local-nginx-conf-nginx-conf"><a href="#vim-usr-local-nginx-conf-nginx-conf" class="headerlink" title="vim /usr/local/nginx/conf/nginx.conf"></a>vim /usr/local/nginx/conf/nginx.conf</h1><p>在80端口下添加fastdfs-nginx模块<br>location ~/group([0-9])/M00 {<br>    ngx_fastdfs_module;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. 在文件存储目录下创建软链接，将其连接到实际存储数据的目录</span><br></pre></td></tr></table></figure></p>
-<h1 id="ln-s-chang-fastdfs-file-data-chang-fastdfs-file-data-M00"><a href="#ln-s-chang-fastdfs-file-data-chang-fastdfs-file-data-M00" class="headerlink" title="ln -s /chang/fastdfs/file/data/ /chang/fastdfs/file/data/M00"></a>ln -s /chang/fastdfs/file/data/ /chang/fastdfs/file/data/M00</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> 7. 在地址栏访问</span><br><span class="line"> 能下载文件就算安装成功。注意和第三点中直接使用nginx路由访问不同的是，这里配置 fastdfs-nginx-module 模块，可以重定向文件链接到源服务器取文件。</span><br><span class="line"></span><br><span class="line"> http://172.16.1.202/group1/M00/00/00/wKgz6lnduTeAMdrcAAEoRmXZPp870.png</span><br><span class="line"></span><br><span class="line">## 七.跟踪服务器tracker配置nginx ##</span><br><span class="line"></span><br><span class="line"> 1. 下载缓存模块ngx_cache_purge</span><br></pre></td></tr></table></figure>
-<h1 id="wget-http-labs-frickle-com-files-ngx-cache-purge-2-3-tar-gz"><a href="#wget-http-labs-frickle-com-files-ngx-cache-purge-2-3-tar-gz" class="headerlink" title="wget http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz"></a>wget <a href="http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz" target="_blank" rel="noopener">http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz</a></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. 解压</span><br></pre></td></tr></table></figure>
-<h1 id="tar-zvxf-ngx-cache-purge-2-3-tar-gz"><a href="#tar-zvxf-ngx-cache-purge-2-3-tar-gz" class="headerlink" title="tar -zvxf ngx_cache_purge-2.3.tar.gz"></a>tar -zvxf ngx_cache_purge-2.3.tar.gz</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3. 将缓存模块添加进nginx</span><br></pre></td></tr></table></figure>
-<h1 id="先停掉nginx服务"><a href="#先停掉nginx服务" class="headerlink" title="先停掉nginx服务"></a>先停掉nginx服务</h1><h1 id="usr-local-nginx-sbin-nginx-s-stop"><a href="#usr-local-nginx-sbin-nginx-s-stop" class="headerlink" title="/usr/local/nginx/sbin/nginx -s stop"></a>/usr/local/nginx/sbin/nginx -s stop</h1><p>进入解压包目录</p>
-<h1 id="cd-softpackages-nginx-1-12-1"><a href="#cd-softpackages-nginx-1-12-1" class="headerlink" title="cd /softpackages/nginx-1.12.1/"></a>cd /softpackages/nginx-1.12.1/</h1><p>添加模块</p>
-<h1 id="configure-–add-module-ngx-cache-purge-2-3"><a href="#configure-–add-module-ngx-cache-purge-2-3" class="headerlink" title="./configure –add-module=../ngx_cache_purge-2.3"></a>./configure –add-module=../ngx_cache_purge-2.3</h1><p>重新编译、安装</p>
-<h1 id="make-amp-amp-make-install"><a href="#make-amp-amp-make-install" class="headerlink" title="make &amp;&amp; make install"></a>make &amp;&amp; make install</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">4.查看nginx模块</span><br></pre></td></tr></table></figure>
-<h1 id="usr-local-nginx-sbin-nginx-V"><a href="#usr-local-nginx-sbin-nginx-V" class="headerlink" title="/usr/local/nginx/sbin/nginx -V"></a>/usr/local/nginx/sbin/nginx -V</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">5. 配置nginx</span><br></pre></td></tr></table></figure>
-<p>vim /usr/local/nginx/conf/nginx.conf</p>
-<p>worker_processes  4;                  #根据CPU核心数而定<br>events {<br>    worker_connections  65535;        #最大链接数<br>    use epoll;                        #新版本的Linux可使用epoll加快处理性能<br>}<br>http {</p>
-<pre><code>#设置缓存参数
-server_names_hash_bucket_size 128;
-client_header_buffer_size 32k;
-large_client_header_buffers 4 32k;
-client_max_body_size 300m;
-sendfile        on;
-tcp_nopush      on;
-proxy_redirect off;
-proxy_set_header Host $http_host;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_connect_timeout 90;
-proxy_send_timeout 90;
-proxy_read_timeout 90;
-proxy_buffer_size 16k;
-proxy_buffers 4 64k;
-proxy_busy_buffers_size 128k;
-proxy_temp_file_write_size 128k;
-#设置缓存存储路径、存储方式、分配内存大小、磁盘最大空间、缓存期限
-proxy_cache_path /var/cache/nginx/proxy_cache levels=1:2 keys_zone=http-cache:500m max_size=10g inactive=30d;
-proxy_temp_path /var/cache/nginx/proxy_cache/tmp;
-#设置group1的服务器
-</code></pre><p>upstream fdfs_group1 {<br>    fair;<br>        server 172.16.1.202:80 weight=1 max_fails=2 fail_timeout=30s;<br>        server 172.16.1.203:80 weight=1 max_fails=2 fail_timeout=30s;<br>    }</p>
-<pre><code>#设置group2的服务器
-upstream fdfs_group2 {
-    server 172.16.1.205:80 weight=1 max_fails=2 fail_timeout=30s;
-}
-</code></pre><p>   server {</p>
-<pre><code>#设置服务器端口
-listen       80;
-#设置group1的负载均衡参数
-location /group1/M00 {
-    proxy_next_upstream http_502 http_504 error timeout invalid_header;
-    proxy_cache http-cache;
-    proxy_cache_valid  200 304 12h;
-    proxy_cache_key $uri$is_args$args;
-    proxy_pass http://fdfs_group1;
-    expires 30d;
-}
-#设置group2的负载均衡参数
-location /group2/M00 {
-    proxy_next_upstream http_502 http_504 error timeout invalid_header;
-    proxy_cache http-cache;
-    proxy_cache_valid  200 304 12h;
-    proxy_cache_key $uri$is_args$args;
-    proxy_pass http://fdfs_group2;
-    expires 30d;
-}
-
-#设置清除缓存的访问权限
-location ~ /purge(/.*) {
-    allow 127.0.0.1;
-    allow 172.16.1.201/24;
-    deny all;
-    proxy_cache_purge http-cache  $1$is_args$args;
-}   
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">6. 创建缓存目录</span><br></pre></td></tr></table></figure>
-<h1 id="mkdir-p-var-cache-nginx-proxy-cache"><a href="#mkdir-p-var-cache-nginx-proxy-cache" class="headerlink" title="mkdir -p /var/cache/nginx/proxy_cache"></a>mkdir -p /var/cache/nginx/proxy_cache</h1><h1 id="mkdir-p-var-cache-nginx-proxy-cache-tmp"><a href="#mkdir-p-var-cache-nginx-proxy-cache-tmp" class="headerlink" title="mkdir -p /var/cache/nginx/proxy_cache/tmp"></a>mkdir -p /var/cache/nginx/proxy_cache/tmp</h1><p><code>`</code> </p>
-
+        
+          <a class="article-more-a" href="2019/06/30/fastdfs集群部署/#more">more >></a>
+        
       
 
       
@@ -1011,85 +937,6 @@ location ~ /purge(/.*) {
 
 
   
-    <article id="post-RabbitMQ详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="2018/09/11/RabbitMQ详解/">RabbitMQ详解</a>
-    </h1>
-  
-
-        
-        <a href="2018/09/11/RabbitMQ详解/" class="archive-article-date">
-  	<time datetime="2018-09-11T01:01:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>RabbitMQ 即一个消息队列，主要是用来实现应用程序的异步和解耦，同时也能起到消息缓冲，消息分发的作用。</p>
-<blockquote>
-<p>消息中间件在互联网公司的使用中越来越多，刚才还看到新闻阿里将RocketMQ捐献给了apache，当然了今天的主角还是讲RabbitMQ。消息中间件最主要的作用是解耦，中间件最标准的用法是生产者生产消息传送到队列，消费者从队列中拿取消息并处理，生产者不用关心是谁来消费，消费者不用关心谁在生产消息，从而达到解耦的目的。在分布式的系统中，消息队列也会被用在很多其它的方面，比如：分布式事务的支持，RPC的调用等等。</p>
-</blockquote>
-        
-          <a class="article-more-a" href="2018/09/11/RabbitMQ详解/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="2018/09/11/RabbitMQ详解/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="page/2/">2</a><a class="extend next" rel="next" href="page/2/">Next &raquo;</a>
@@ -1194,11 +1041,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">php</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">转载</a>
+                <a href="javascript:void(0)" class="js-tag color4">php</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1206,11 +1053,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color3">转载</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

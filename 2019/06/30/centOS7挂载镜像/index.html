@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/12 | 常大侠</title>
+  <title>centOS7挂载镜像 | 常大侠</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="常大侠">
-<meta property="og:url" content="http://yoursite.com/archives/2018/12/index.html">
+  <meta name="description" content="上传iso文件到/opt 创建挂载目录 # mkdir/media/CentOS7  挂载iso文件# mount -t iso9660 -o loop /opt/CentOS-7-x86_64-DVD-1511_7.2.iso /media/CentOS7/ 配置源#  vi /etc/yum.repos.d/CentOS7-Localsource.repo输入一下内容[CentOS7-Loc">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centOS7挂载镜像">
+<meta property="og:url" content="http://yoursite.com/2019/06/30/centOS7挂载镜像/index.html">
 <meta property="og:site_name" content="常大侠">
+<meta property="og:description" content="上传iso文件到/opt 创建挂载目录 # mkdir/media/CentOS7  挂载iso文件# mount -t iso9660 -o loop /opt/CentOS-7-x86_64-DVD-1511_7.2.iso /media/CentOS7/ 配置源#  vi /etc/yum.repos.d/CentOS7-Localsource.repo输入一下内容[CentOS7-Loc">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-30T11:47:59.953Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常大侠">
+<meta name="twitter:title" content="centOS7挂载镜像">
+<meta name="twitter:description" content="上传iso文件到/opt 创建挂载目录 # mkdir/media/CentOS7  挂载iso文件# mount -t iso9660 -o loop /opt/CentOS-7-x86_64-DVD-1511_7.2.iso /media/CentOS7/ 配置源#  vi /etc/yum.repos.d/CentOS7-Localsource.repo输入一下内容[CentOS7-Loc">
   
     <link rel="alternative" href="/atom.xml" title="常大侠" type="application/atom+xml">
   
@@ -55,9 +60,9 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="../../../index.html">主页</a></li>
+				<li><a href="../../../../index.html">主页</a></li>
 	        
-				<li><a href="../../../tags/随笔/">随笔</a></li>
+				<li><a href="../../../../tags/随笔/">随笔</a></li>
 	        
 			</ul>
 		</nav>
@@ -137,9 +142,9 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 50%"><a href="../../../index.html">主页</a></li>
+					<li style="width: 50%"><a href="../../../../index.html">主页</a></li>
 		        
-					<li style="width: 50%"><a href="../../../tags/随笔/">随笔</a></li>
+					<li style="width: 50%"><a href="../../../../tags/随笔/">随笔</a></li>
 		        
 				</ul>
 			</nav>
@@ -154,60 +159,202 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-centOS7挂载镜像" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href=".." class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="../../../2018/12/04/springboot-fastDFS的安装配置使用/" class="archive-article-date">
-  	<time datetime="2018-12-04T05:36:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-04</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="../../../2018/12/04/springboot-fastDFS的安装配置使用/">springboot fastDFS的安装配置使用</a>
+    <h1 class="article-title" itemprop="name">
+      centOS7挂载镜像
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="" class="archive-article-date">
+  	<time datetime="2019-06-30T11:46:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>上传iso文件到/opt</li>
+<li><p>创建挂载目录</p>
+<p><code># mkdir/media/CentOS7</code></p>
+</li>
+<li>挂载iso文件<br><code># mount -t iso9660 -o loop /opt/CentOS-7-x86_64-DVD-1511_7.2.iso /media/CentOS7/</code></li>
+<li>配置源<br><code>#  vi /etc/yum.repos.d/CentOS7-Localsource.repo</code><br>输入一下内容<br><code>[CentOS7-Localsource]
+name=CentOS7
+baseurl=file:///media/CentOS7
+enabled=1
+gpgcheck=0</code><br>如果是iosred-hat 6.5<br><code>#  vi  /etc/yum.repos.d/rhel-source.repo</code><br><code>[rhel-source-local]
+name=Red Hat Enterprise Linux
+baseurl=file:///iso
+enabled=1
+gpgcheck=0</code></li>
+<li>将此文件/etc/yum.repos.d/CentOS-Base.repo备份掉，</li>
+<li>生成本地yum缓存执行<br><code># yum  clean all</code><br><code># yum makecache</code></li>
+<li>测试是否生效<br><code># yum install telnet</code></li>
+<li>卸载挂载的镜像文件<br><code># umount  /media/CentOS7/</code></li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/06/30/centOS7挂载镜像/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="../fastdfs集群部署/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">fastdfs集群部署</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+<script src="https://jjeejj.github.io/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "Sun Jun 30 2019 19:46:23 GMT+0800",
+  owner: '%likeapple%',
+  repo: '%likeapple.github.io%',
+  oauth: {
+    client_id: '8ebc5cd7bbfb8092d1db',
+    client_secret: '3f194423bdbfccdbfeb04633ba3a6045a9e90273',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -233,8 +380,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
